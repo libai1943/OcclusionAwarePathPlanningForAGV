@@ -1,0 +1,11 @@
+reset;
+model NLPX.mod;
+include ig.INIVAL;
+option solver ipopt;
+solve;
+
+shell ("del " & ("z.txt"));
+for {i in {1..(8*Nfe)}} {
+	printf "%5.6f;", z[i]>>("z.txt");
+}
+close ("z.txt");

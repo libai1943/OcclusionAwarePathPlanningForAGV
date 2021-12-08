@@ -1,0 +1,34 @@
+reset;
+shell ("del " & ("opti_flag.txt"));
+printf "0">>("opti_flag.txt");
+close ("opti_flag.txt");
+
+model CEM.mod;
+option solver ipopt;
+solve;
+
+shell ("del " & ("opti_flag.txt"));
+if match (solve_message, "Optimal") > 0 then {
+	printf "1">>("opti_flag.txt");
+} else{
+	printf "0">>("opti_flag.txt");
+};
+close ("opti_flag.txt");
+
+shell ("del " & ("l.txt"));
+for {i in {1..NE}} {
+    printf "%5.8f; ",  l[i]>>("l.txt");
+}
+close ("l.txt");
+
+shell ("del " & ("dl.txt"));
+for {i in {1..NE}} {
+    printf "%5.8f; ",  dl[i]>>("dl.txt");
+}
+close ("dl.txt");
+
+shell ("del " & ("ddl.txt"));
+for {i in {1..NE}} {
+    printf "%5.8f; ",  ddl[i]>>("ddl.txt");
+}
+close ("ddl.txt");
